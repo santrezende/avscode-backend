@@ -12,14 +12,9 @@ export class VehiclesController {
     return this.vehiclesService.create(createVehicleDto);
   }
 
-  @Get()
-  findAll() {
-    return this.vehiclesService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.vehiclesService.findOne(+id);
+  @Get(':licensePlate')
+  findOne(@Param('licensePlate') licensePlate: string) {
+    return this.vehiclesService.findOne(licensePlate);
   }
 
   @Patch(':id')

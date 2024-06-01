@@ -1,26 +1,36 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateVehicleDto } from './dto/create-vehicle.dto';
 import { UpdateVehicleDto } from './dto/update-vehicle.dto';
+import { VehiclesRepository } from './vehicles.repository';
 
 @Injectable()
 export class VehiclesService {
-  create(createVehicleDto: CreateVehicleDto) {
-    return 'This action adds a new vehicle';
+  constructor (private readonly repository: VehiclesRepository) { }
+
+  async create(createVehicleDto: CreateVehicleDto) {
+    const { licensePlate } = createVehicleDto;
+    const vehicle = await this.repository.findOneByLicensePlate(licensePlate);
+    if (vehicle) throw new HttpException("Vehicle with this license plate already exists", HttpStatus.CONFLICT);
+    return await this.repository.create(createVehicleDto);
   }
 
-  findAll() {
-    return `This action returns all vehicles`;
+  async findOne(licensePlate: string) {
+    const vehicle = await this.repository.findOneByLicensePlate(licensePlate);
+    if (!vehicle) throw new HttpException("Vehicle with this license plate don't exist", HttpStatus.NOT_FOUND);
+    return vehicle;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} vehicle`;
+  async update(id: number, updateVehicleDto: UpdateVehicleDto) {
+    const { kilometersDriven, lastOilChange } = updateVehicleDto;
+    if (!kilometersDriven && !lastOilChange) throw new HttpException("You should set a new value for kilometersDriven or lastOilChange", HttpStatus.NOT_ACCEPTABLE);
+    const vehicle = await this.repository.findOneById(id);
+    if (!vehicle) throw new HttpException("Vehicle with this id don't exist", HttpStatus.NOT_FOUND);
+    return await this.repository.update(id, updateVehicleDto);
   }
 
-  update(id: number, updateVehicleDto: UpdateVehicleDto) {
-    return `This action updates a #${id} vehicle`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} vehicle`;
+  async remove(id: number) {
+    const vehicle = await this.repository.findOneById(id);
+    if (!vehicle) throw new HttpException("Vehicle with this id don't exist", HttpStatus.NOT_FOUND);
+    return await this.repository.remove(id);
   }
 }
