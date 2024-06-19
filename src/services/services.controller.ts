@@ -12,14 +12,9 @@ export class ServicesController {
     return this.servicesService.create(createServiceDto);
   }
 
-  @Get()
-  findAll() {
-    return this.servicesService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.servicesService.findOne(+id);
+  @Get(':licensePlate')
+  findAllByLicensePlate(@Param('licensePlate') licensePlate: string) {
+    return this.servicesService.findAllByLicensePlate(licensePlate);
   }
 
   @Patch(':id')
