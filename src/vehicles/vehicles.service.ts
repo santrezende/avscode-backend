@@ -28,7 +28,8 @@ export class VehiclesService {
 
   async update(id: number, updateVehicleDto: UpdateVehicleDto) {
     const { kilometersDriven, lastOilChange } = updateVehicleDto;
-    if (!kilometersDriven && !lastOilChange) throw new HttpException("You should set a new value for kilometersDriven or lastOilChange", HttpStatus.NOT_ACCEPTABLE);
+    if (!kilometersDriven && !lastOilChange) throw new HttpException("You should set a new value for kilometersDriven or lastOilChange", HttpStatus.BAD_REQUEST);
+      
     const vehicle = await this.repository.findOneById(id);
     if (!vehicle) throw new HttpException("Vehicle with this id don't exist", HttpStatus.NOT_FOUND);
     return await this.repository.update(id, updateVehicleDto);

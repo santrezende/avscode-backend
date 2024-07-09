@@ -7,6 +7,10 @@ export class CreateVehicleDto {
   licensePlate: string;
 
   @IsString()
+  @IsNotEmpty()
+  customerName: string;
+
+  @IsString()
   @Length(11, 14, { message: 'O CPF/CNPJ do proprietário deve ter 11 ou 14 caracteres.' })
   @IsNotEmpty()
   cpfOrCnpj: string;
