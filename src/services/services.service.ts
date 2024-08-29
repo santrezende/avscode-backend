@@ -23,8 +23,8 @@ export class ServicesService {
   }
 
   async update(id: number, updateServiceDto: UpdateServiceDto) {
-    const { serviceData } = updateServiceDto;
-    if (!serviceData) throw new HttpException("You should set a new value for serviceData", HttpStatus.NOT_ACCEPTABLE);
+    const { serviceData, rating } = updateServiceDto;
+    if (!serviceData || !rating) throw new HttpException("You should set a new value for serviceData or rating", HttpStatus.NOT_ACCEPTABLE);
     return await this.repository.update(id, updateServiceDto);
   }
 

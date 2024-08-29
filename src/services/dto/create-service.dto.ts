@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsString } from "class-validator"
+import { IsNotEmpty, IsNumber, IsString, Min, Max } from "class-validator"
 
 export class CreateServiceDto {
     @IsNotEmpty()
@@ -11,4 +11,9 @@ export class CreateServiceDto {
     @IsNotEmpty()
     @IsNumber()
     vehicleId: number;
+
+    @IsNumber()
+    @Min(1)
+    @Max(5)
+    rating: number;
 }

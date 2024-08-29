@@ -5,6 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import { AuthRepository } from './auth.repository';
 import { Users } from '@prisma/client';
 import { SignUpDto } from './dto/sign-up.dto';
+import { VehiclesRepository } from 'src/vehicles/vehicles.repository';
 
 @Injectable()
 export class AuthService {
@@ -14,7 +15,8 @@ export class AuthService {
 
   constructor(
     private readonly jwtService: JwtService,
-    private readonly repository: AuthRepository
+    private readonly repository: AuthRepository,
+    private readonly veichlesRepository: VehiclesRepository
   ) {}
 
   async getById(id: number) {
@@ -70,5 +72,13 @@ export class AuthService {
     });
 
     return data;
+  }
+
+  async validateCpfAndLicensePlate(cpf: string, licensePlate: string): Promise<boolean> {
+    const vehicle = await this.veichlesRepository.findOneByLicensePlate(licensePlate);
+    if (vehicle && vehicle.cpf === cpf) {
+      return true;
+    }
+    return false;
   }
 }

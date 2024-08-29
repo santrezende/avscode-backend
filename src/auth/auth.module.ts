@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { AuthRepository } from './auth.repository';
 import { JwtModule } from '@nestjs/jwt';
+import { VehiclesRepository } from 'src/vehicles/vehicles.repository';
 
 @Global()
 @Module({
@@ -11,6 +12,6 @@ import { JwtModule } from '@nestjs/jwt';
       secret: process.env.JWT_SECRET,
     })],
   controllers: [AuthController],
-  providers: [AuthService, AuthRepository],
+  providers: [AuthService, AuthRepository, VehiclesRepository],
 })
 export class AuthModule {}

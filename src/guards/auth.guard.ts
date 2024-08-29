@@ -1,4 +1,4 @@
-import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
+import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from "@nestjs/common";
 import { AuthService } from "./../auth/auth.service";
 
 @Injectable()
@@ -12,14 +12,28 @@ export class AuthGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const { authorization } = request.headers;
 
-    try {
-      const data = this.authService.checkToken((authorization ?? "").split(" ")[1]);
-      const user = await this.authService.getById(parseInt(data.sub));
-      request.user = user;
-    } catch (error) {
-      console.log(error);
-      return false;
+    if (authorization) {
+      try {
+        const token = (authorization ?? "").split(" ")[1];
+        const data = this.authService.checkToken(token);
+        const user = await this.authService.getById(parseInt(data.sub));
+        request.user = user;
+        return true;
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
     }
-    return true;
+
+    const { cpf, licensePlate } = request.body;
+    if (cpf && licensePlate) {
+      const isValid = await this.authService.validateCpfAndLicensePlate(cpf, licensePlate);
+      if (!isValid) {
+        throw new UnauthorizedException('CPF ou placa do veículo inválidos.');
+      }
+      return true;
+    }
+    
+    return false;
   }
 }

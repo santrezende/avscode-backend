@@ -4,6 +4,7 @@ import { CreateVehicleDto } from './dto/create-vehicle.dto';
 import { UpdateVehicleDto } from './dto/update-vehicle.dto';
 import { AuthGuard } from 'src/guards/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('vehicles')
 export class VehiclesController {
   constructor(private readonly vehiclesService: VehiclesService) {}
@@ -17,14 +18,13 @@ export class VehiclesController {
   findOne(@Param('licensePlate') licensePlate: string) {
     return this.vehiclesService.findOne(licensePlate);
   }
-
+  
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateVehicleDto: UpdateVehicleDto) {
     return this.vehiclesService.update(+id, updateVehicleDto);
   }
 
   @Delete(':id')
-  @UseGuards(AuthGuard)
   remove(@Param('id') id: string) {
     return this.vehiclesService.remove(+id);
   }
