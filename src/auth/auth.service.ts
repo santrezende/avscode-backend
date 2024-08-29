@@ -46,7 +46,7 @@ export class AuthService {
     const valid = await bcrypt.compare(password, user.password);
     if (!valid) throw new HttpException('Email or password not valid', HttpStatus.UNAUTHORIZED);
 
-    return this.createToken(user);
+    return {token: this.createToken(user).token, name: user.name};
   }
 
   createToken(user: Users) {
