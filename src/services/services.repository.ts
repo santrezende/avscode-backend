@@ -9,7 +9,14 @@ export class ServicesRepository {
 
     create(createServiceDto: CreateServiceDto) {
         return this.prisma.services.create({
-            data: createServiceDto
+            data: {
+                serviceDate: createServiceDto.serviceDate,
+                serviceTitle: createServiceDto.serviceTitle,
+                serviceData: createServiceDto.serviceData,
+                vehicleId: createServiceDto.vehicleId,
+                kilometersDriven: createServiceDto.kilometersDriven,
+                rating: 0
+            }
         })
     }
 
