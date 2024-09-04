@@ -14,6 +14,11 @@ export class VehiclesController {
     return this.vehiclesService.create(createVehicleDto);
   }
 
+  @Post(':licensePlate')
+  findOneByLicensePlate(@Body() body: { licensePlate: string, cpf: string }) {
+    return this.vehiclesService.findOne(body.licensePlate);
+  }
+
   @Get(':licensePlate')
   findOne(@Param('licensePlate') licensePlate: string) {
     return this.vehiclesService.findOne(licensePlate);

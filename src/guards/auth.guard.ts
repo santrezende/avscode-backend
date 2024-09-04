@@ -29,7 +29,7 @@ export class AuthGuard implements CanActivate {
     if (cpf && licensePlate) {
       const isValid = await this.authService.validateCpfAndLicensePlate(cpf, licensePlate);
       if (!isValid) {
-        throw new UnauthorizedException('CPF ou placa do veículo inválidos.');
+        throw new UnauthorizedException('CPF or LicensePlate are invalid');
       }
       return true;
     }

@@ -14,6 +14,11 @@ export class ServicesController {
     return this.servicesService.create(createServiceDto);
   }
 
+  @Post(':licensePlate')
+  findByLicensePlate(@Body() body: { licensePlate: string, cpf: string }) {
+    return this.servicesService.findAllByLicensePlate(body.licensePlate);
+  }
+
   @Get(':licensePlate')
   findAllByLicensePlate(@Param('licensePlate') licensePlate: string) {
     return this.servicesService.findAllByLicensePlate(licensePlate);

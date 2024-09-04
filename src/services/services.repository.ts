@@ -33,10 +33,10 @@ export class ServicesRepository {
         })
     }
 
-    update(id: number, updateServiceDto: UpdateServiceDto) {
+    update(id: number, rating: number) {
         return this.prisma.services.update({
             where: { id },
-            data: updateServiceDto
+            data: { rating }
         })
     }
 
