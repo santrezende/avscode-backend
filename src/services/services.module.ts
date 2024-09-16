@@ -12,8 +12,16 @@ import { AuthRepository } from 'src/auth/auth.repository';
   imports: [
     JwtModule.register({
       secret: process.env.JWT_SECRET,
-    })],
+    }),
+  ],
   controllers: [ServicesController],
-  providers: [ServicesService, ServicesRepository, VehiclesService, VehiclesRepository, AuthService, AuthRepository],
+  providers: [
+    ServicesService,
+    ServicesRepository,
+    VehiclesService,
+    VehiclesRepository,
+    AuthService,
+    AuthRepository,
+  ],
 })
 export class ServicesModule {}

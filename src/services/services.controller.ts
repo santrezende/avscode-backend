@@ -1,11 +1,20 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { ServicesService } from './services.service';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
 import { AuthGuard } from 'src/guards/auth.guard';
 
 @UseGuards(AuthGuard)
-@Controller('services')
+@Controller('/api/services')
 export class ServicesController {
   constructor(private readonly servicesService: ServicesService) {}
 
@@ -15,7 +24,7 @@ export class ServicesController {
   }
 
   @Post(':licensePlate')
-  findByLicensePlate(@Body() body: { licensePlate: string, cpf: string }) {
+  findByLicensePlate(@Body() body: { licensePlate: string; cpf: string }) {
     return this.servicesService.findAllByLicensePlate(body.licensePlate);
   }
 

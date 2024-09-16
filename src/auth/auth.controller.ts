@@ -3,8 +3,8 @@ import { AuthService } from './auth.service';
 import { SignInDto } from './dto/sign-in.dto';
 import { SignUpDto } from './dto/sign-up.dto';
 
-@Controller('auth')
-export class AuthController  {
+@Controller('/api/auth')
+export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('/sign-in')

@@ -16,7 +16,7 @@ export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
     private readonly repository: AuthRepository,
-    private readonly veichlesRepository: VehiclesRepository
+    private readonly veichlesRepository: VehiclesRepository,
   ) {}
 
   async getById(id: number) {
@@ -33,7 +33,8 @@ export class AuthService {
   async create(signUpDto: SignUpDto) {
     const { email } = signUpDto;
     const user = await this.repository.getUserByEmail(email);
-    if (user) throw new HttpException('Email already in use', HttpStatus.CONFLICT);
+    if (user)
+      throw new HttpException('Email already in use', HttpStatus.CONFLICT);
 
     return await this.repository.create(signUpDto);
   }
@@ -41,12 +42,20 @@ export class AuthService {
   async signIn(signInDto: SignInDto) {
     const { email, password } = signInDto;
     const user = await this.getUserByEmail(email);
-    if (!user) throw new HttpException('Email or password not valid', HttpStatus.UNAUTHORIZED);
+    if (!user)
+      throw new HttpException(
+        'Email or password not valid',
+        HttpStatus.UNAUTHORIZED,
+      );
 
     const valid = await bcrypt.compare(password, user.password);
-    if (!valid) throw new HttpException('Email or password not valid', HttpStatus.UNAUTHORIZED);
+    if (!valid)
+      throw new HttpException(
+        'Email or password not valid',
+        HttpStatus.UNAUTHORIZED,
+      );
 
-    return {token: this.createToken(user).token, name: user.name};
+    return { token: this.createToken(user).token, name: user.name };
   }
 
   createToken(user: Users) {
@@ -74,8 +83,12 @@ export class AuthService {
     return data;
   }
 
-  async validateCpfAndLicensePlate(cpf: string, licensePlate: string): Promise<boolean> {
-    const vehicle = await this.veichlesRepository.findOneByLicensePlate(licensePlate);
+  async validateCpfAndLicensePlate(
+    cpf: string,
+    licensePlate: string,
+  ): Promise<boolean> {
+    const vehicle =
+      await this.veichlesRepository.findOneByLicensePlate(licensePlate);
     if (vehicle && vehicle.cpf === cpf) {
       return true;
     }

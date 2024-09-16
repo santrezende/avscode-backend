@@ -10,9 +10,10 @@ import { AuthRepository } from 'src/auth/auth.repository';
   imports: [
     JwtModule.register({
       secret: process.env.JWT_SECRET,
-    })],
+    }),
+  ],
   controllers: [VehiclesController],
   providers: [VehiclesService, VehiclesRepository, AuthService, AuthRepository],
-  exports: [VehiclesService]
+  exports: [VehiclesService],
 })
 export class VehiclesModule {}

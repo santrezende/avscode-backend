@@ -8,10 +8,16 @@ import { AuthModule } from './auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 
 @Module({
-  imports: [PrismaModule, VehiclesModule, ServicesModule, AuthModule, JwtModule.register({
-    secret: process.env.JWT_SECRET,
-    signOptions: { expiresIn: '15h' },
-  })],
+  imports: [
+    PrismaModule,
+    VehiclesModule,
+    ServicesModule,
+    AuthModule,
+    JwtModule.register({
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '15h' },
+    }),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

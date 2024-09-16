@@ -6,10 +6,10 @@ import { VehiclesService } from 'src/vehicles/vehicles.service';
 
 @Injectable()
 export class ServicesService {
-  constructor (
-    private readonly repository: ServicesRepository, 
-    private readonly vehiclesService: VehiclesService
-  ) { }
+  constructor(
+    private readonly repository: ServicesRepository,
+    private readonly vehiclesService: VehiclesService,
+  ) {}
 
   async create(createServiceDto: CreateServiceDto) {
     const { vehicleId } = createServiceDto;
@@ -24,7 +24,11 @@ export class ServicesService {
 
   async update(id: number, updateServiceDto: UpdateServiceDto) {
     const { rating } = updateServiceDto;
-    if (!rating) throw new HttpException("You should set a new value for rating", HttpStatus.NOT_ACCEPTABLE);
+    if (!rating)
+      throw new HttpException(
+        'You should set a new value for rating',
+        HttpStatus.NOT_ACCEPTABLE,
+      );
     return await this.repository.update(id, rating);
   }
 

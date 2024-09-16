@@ -1,22 +1,22 @@
-import { IsNotEmpty, IsNumber, IsString } from "class-validator"
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateServiceDto {
-    @IsNotEmpty()
-    serviceDate: Date;
+  @IsNotEmpty()
+  serviceDate: Date;
 
-    @IsString()
-    @IsNotEmpty()
-    serviceData: string;
+  @IsString()
+  @IsNotEmpty()
+  serviceData: string;
 
-    @IsNotEmpty()
-    @IsString()
-    serviceTitle: string;
+  @IsNotEmpty()
+  @IsString()
+  serviceTitle: string;
 
-    @IsNotEmpty()
-    @IsNumber()
-    vehicleId: number;
+  @IsNotEmpty()
+  @IsNumber()
+  vehicleId: number;
 
-    @IsNotEmpty()
-    @IsNumber()
-    kilometersDriven: number;
+  @IsNotEmpty()
+  @IsNumber()
+  kilometersDriven: number;
 }

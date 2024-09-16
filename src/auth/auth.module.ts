@@ -10,7 +10,8 @@ import { VehiclesRepository } from 'src/vehicles/vehicles.repository';
   imports: [
     JwtModule.register({
       secret: process.env.JWT_SECRET,
-    })],
+    }),
+  ],
   controllers: [AuthController],
   providers: [AuthService, AuthRepository, VehiclesRepository],
 })
