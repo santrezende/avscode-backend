@@ -6,7 +6,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
   app.enableCors({
-    origin: ['http://localhost:3000', 'http://127.0.0.1:5173'],
+    origin: ['https://avsmotors.com.br'],
     methods: 'GET,POST,PATCH,DELETE',
     allowedHeaders: 'Content-Type,Authorization',
   });
