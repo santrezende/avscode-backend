@@ -26,6 +26,17 @@ export class VehiclesRepository {
     });
   }
 
+  searchByLicensePlate(licensePlate: string) {
+    return this.prisma.vehicle.findMany({
+      where: {
+        licensePlate: {
+          startsWith: licensePlate.toUpperCase(),
+        },
+      },
+      take: 5,
+    });
+  }
+
   findOneById(id: number) {
     return this.prisma.vehicle.findUnique({
       where: { id },

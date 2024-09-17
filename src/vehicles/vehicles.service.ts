@@ -38,6 +38,14 @@ export class VehiclesService {
     return vehicle;
   }
 
+  async searchByLicensePlate(licensePlate: string) {
+    const vehicles = await this.repository.searchByLicensePlate(licensePlate);
+    if (vehicles.length === 0) {
+      throw new HttpException('No vehicles found', HttpStatus.NOT_FOUND);
+    }
+    return vehicles;
+  }
+
   async update(id: number, updateVehicleDto: UpdateVehicleDto) {
     const vehicle = await this.repository.findOneById(id);
     if (!vehicle)

@@ -33,6 +33,12 @@ export class VehiclesController {
     return this.vehiclesService.findOne(licensePlate);
   }
 
+  @Get('search/:licensePlate')
+  async searchByLicensePlate(@Param('licensePlate') licensePlate: string) {
+    return this.vehiclesService.searchByLicensePlate(licensePlate);
+  }
+
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateVehicleDto: UpdateVehicleDto) {
     return this.vehiclesService.update(+id, updateVehicleDto);
